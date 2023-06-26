@@ -1,0 +1,17 @@
+.gameBox {
+    border: solid red;
+    width: 100%;
+    height: 100%;
+}
+
+.statBar {
+    border: solid green;
+}
+
+.textBox {
+    border: solid blue;
+}
+
+.buttonBar {
+    border: solid purple;
+}
