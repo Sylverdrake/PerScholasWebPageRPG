@@ -40,7 +40,7 @@ Physical Stats increased by equipment, skills, and levels
 Magical Stats increased by equipment, skills, and levels
 Evasion Stat increased by equipment, skills
 
-Inventory - Has 30 Slots !!upgraded with Gold?
+Inventory - 
 Gold is accumulated during adventure, used to buy things, does not take up an inventory slot
 Items stored in slots until used (if consumable), sold, or discarded (gotta figure out how to do this)
 
@@ -88,3 +88,13 @@ if HP hits 0 at any time, you lose, and must restart (or restart from a save poi
 //!!Post Game!
 //!!Better Level up System
 //!!Music!
+
+//!!!Town
+
+//Town needs a name, a shop location, an Inn, and 3 NPCs to talk to
+//Town Name: Port Scholas
+//Shop Name: Stuff and Things - Guy Holdings 
+//Inn Name: Rest and Such - Sleep King
+//NPC 1: Distressed Man 
+    //- Gives Sidequest 'Find McGuffin!` - Player is tasked with going to Overworld Location 2 and looking for something called a McGuffin.
+    // McGuffin is an item that will drop from Overworld Location 2 

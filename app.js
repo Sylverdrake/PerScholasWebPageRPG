@@ -10,60 +10,44 @@
 
 //-----------------------------------------------------------------------------------
 //Item classes
-class Weapon
+class Equipable
 {
-    constructor(name, damage, attack, cost, sellval, onehand, twohand, equipped, canbeused)
+    constructor(name, damage, pAttack, pDefense, mDefense, evade, cost, sellVal, oneHand, twoHand, equipped, canBeUsed)
     {
         this.name = name;
         this.damage = damage;
-        this.attack = attack;
-        this.cost = cost;
-        this.sellval = sellval;
-        this.onehand = onehand;
-        this.twohand = twohand;
-        this.equipped = equipped;
-        this.canbeused = canbeused
-    }
-}
-
-//----
-//Melee Weapons
-//----
-const testsword = new Weapon("Sword of Testing", 5, 5, 0, 0, true, false, false, false)
-
-//----
-//Ranged Weapons
-//----
-
-//----
-//Magic Weapons
-//----
-
-
-//-----------------------------------------------------------------------------------
-class Equipable
-{
-    constructor(name, pdefense, mdefense, evade, effect, cost, sellval, equipped, canbeused)
-    {
-        this.name = name
-        this.pdefense = pdefense;
-        this.mdefense = mdefense;
+        this.pAttack = pAttack;
+        this.pDefense = pDefense;
+        this.mDefense = mDefense;
         this.evade = evade;
-        this.effect = effect;
         this.cost = cost;
-        this.sellval = sellval;
+        this.sellVal = sellVal;
+        this.oneHand = oneHand;
+        this.twoHand = twoHand;
         this.equipped = equipped;
-        this.canbeused = canbeused
+        this.canBeUsed = canBeUsed
     }
 }
 
-//----
-//Armor
-//----
 
-//----
+//Melee Weapons
+
+const testSword = new Equipable("Sword of Testing", 5, 5, 0, 0, true, false, false, false)
+
+
+//Ranged Weapons
+
+
+//Magic Weapons
+
+
+
+//Armor
+
+
+
 //Accessories
-//----
+
 
 //Notes: 
 //Equip Item
@@ -72,17 +56,17 @@ class Equipable
 //-----------------------------------------------------------------------------------
 class Item
 {
-    constructor(name, examine, cost, sellval, canbeused)
+    constructor(name, examine, cost, sellVal, canBeUsed)
 {
     this.name = name,
     this.examine = examine,
     this.cost = cost,
-    this.sellval = sellval
-    this.canbeused = canbeused
+    this.sellVal = sellVal
+    this.canBeUsed = canBeUsed
 }
     useItem = () =>
     { 
-    if (this.canbeused === true)
+    if (this.canBeUsed === true)
         {
     console.log(`${this.name} is used.`);
         } 
@@ -93,16 +77,38 @@ class Item
     }
 }
 
-const testitem = new Item("Item of Testing", "If you are seeing this, I messed up somewhere.", 0, 0, true)
+const testItem = new Item("Item of Testing", "If you are seeing this, I messed up somewhere.", 0, 0, true)
 
 //Notes: the function shows up but doesn't work. Add Discard, Buy, Sell
+
+class Monster
+{
+    constructor(name, health, skill1, skill2, pAttack, pDefense, mAtk, mDef, evade, spDrop, itemDrop, goldDrop)
+    {
+        this.name = name,
+        this.health = health,
+        this.skill1 = skill1,
+        this.skill2 = skill2,
+        this.pattack = pAttack,
+        this.pdefense = pDefense,
+        this.matk = mAtk,
+        this.mdef = mDef,
+        this.evade = evade,
+        this.spdrop = spDrop,
+        this.itemdrop = itemDrop,
+        this.golddrop = goldDrop
+    }
+}
+
+const testMonster = new Monster("Monster of The Seven Tests", 50, 10, 10, 10, 10, 10, 10, 10, 2, false, 5)
 
 
 //-----------------------------------------------------------------------------------
 //Character Object
-let char = {
+let char = 
+{
     name: "",
-    level: 10,
+    level: 1,
     hp: 100,
     mp: 100,
     str: 10,
@@ -113,14 +119,14 @@ let char = {
     skillPoints: 0,
     skills: [],
 
-    equipd: [testsword],
     physAtk: 10,
     physDef: 10,
     mageAtk: 10,
     mageDef: 10,
     evasion: 10,
 
-    bag: ["stuff"],
+    equipd: [testSword],
+    bag: [testItem],
     gold: 0,
 }
 
@@ -128,6 +134,7 @@ let char = {
 //LEVEL UP FUNCTIONS
 let newHP = char.vit / 3 * 10 + char.hp
 let newMP = char.spt / 3 * 10 + char.mp
+
 let skillPointstoLevel = 2 * char.level
 
 const checkLevel = () =>
@@ -163,12 +170,11 @@ const checkLevel = () =>
 
 //-----------------------------------------------------------------------------------
 //Inventory Functions
-
+let inventory =  char.inventory
 //Inventory Full
 
 
 //-----------------------------------------------------------------------------------
-//Tests
-// console.log(char);
+//
 
 

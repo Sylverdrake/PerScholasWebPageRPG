@@ -21,8 +21,5 @@ Day 4: TEST IT ALL AND MAKE SURE IT WORKS
 
 
 What you want for the class demo:
-A character that can buy skills, equip things, and use items.
-A town to visit, with a shop, a sidequest, and npcs to talk to.
-Two Overworld Locations, with 3 monster encounters each.
-Two Dungeons, with 3 monster encounters, and a boss.
-1 final boss dungeon, with a final boss encounter
+A character that can buy and use skills, equip things, and use items.
+One Dungeon, with 3 monster encounters, a shop, a miniboss, and a final boss
