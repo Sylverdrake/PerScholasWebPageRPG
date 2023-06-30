@@ -1,20 +1,43 @@
+body {
+    display: flex;
+}
+
 .mapBox {
     border: solid;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     width: 15%;
+    height: 15%
 }
 
 .room {
     border: solid red;
-    height: 100px;
-    width: 100px;
+    height: 130px;
+    width: 130px;
+}
+
+.contentBox {
+    border: solid blue;
+    width: 15%;
+    height: 15%;
 }
 
 .textBox {
     border: solid green;
+    width: 100%;
+    
 }
 
 .inputBox {
     border: solid orange;
+    display: flex;
+    justify-content: center;
+    margin: 1em;
+}
+
+.player {
+    border: solid green;
+    width: 40px;
+    height: 40px;
 }

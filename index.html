@@ -12,25 +12,36 @@
     <body>
         <!-- MAP to show location of player -->
     <div class="mapBox">
-        <div class="room"><p>room 1</p></div>
-        <div class="room"><p>room 2</p></div>
-        <div class="room"><p>room 3</p></div>
-        <div class="room"><p>room 4</p></div>
-        <div class="room"><p>room 5</p></div>
-        <div class="room"><p>room 6</p></div>
+
+        <div class="room" id ="room1"></div>
+        <div class="room" id ="room2"></div>
+        <div class="room" id ="room3"></div>
+        <div class="room" id ="room4"></div>
+        <div class="room" id ="room5"></div>
+        <div class="room" id ="room6"></div>
+
+
+        <div class="mapLocation">
+            <p class="currentRoom">? ? ?</p>
+        </div>
     </div>
 
-        <!-- Text Box to say what is going -->
-    <div class="textBox">
-<p>blah blah blah</p>
+
+
+
+    <div class="contentBox">
+                <!-- Text Box to say what is going -->
+        <div class="textBox">
+            <p>Everything is dark. Maybe try opening your eyes?</p>
+        </div>
+
+                <!-- Input to enter commands -->
+                <div class="inputBox">
+                    <button class="button" onclick="start()">Start</button>
+                </div>
     </div>
 
-        <!-- Input to enter commands -->
-<div class="inputBox">
-    <label for="gameInput"></label>
-    <input type="text" id="gameInput" class="input" enterkeyhit="enter" placeholder="start game">
-</div>
-
-        <script src="app.js" async defer></script>
+        <script src="sanity.js" async defer></script>
     </body>
 </html>
+
