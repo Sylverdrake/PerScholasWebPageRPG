@@ -2,6 +2,7 @@
 let inputBox = document.querySelector(".inputBox")
 let textBox = document.querySelector(".textBox")
 let mapLocation = document.querySelector(".mapLocation")
+let inventorylist = document.querySelector(".inventory")
 
 const one = document.getElementById("room1")
 const two = document.getElementById("room2")
@@ -53,6 +54,8 @@ let size = -1
 //Enemy
 const enemy = new Entity("Test Demon", 50, randomStat(1,5), 8, 12)
 
+//NPC
+const npc = new Entity("Bob")
 
 //Items
 class Item
@@ -114,13 +117,22 @@ const start = () =>
     mapLocation.innerHTML = `${currentRoom.name}`;
     clearBtns();
     inputBox.innerHTML = 
-                        `<button class="button" onclick="look()"> Look Around </button>
-                        <button class="button" onclick="pickUpItem()"> Pick Up Item </button>
+                        `
+                        <div class = "input">
+                            <button class="button" onclick="look()"> Look Around </button>
+                            <button class="button" onclick="pickUpItem()"> Pick Up Item </button>
+                        </div>
+
+
+                        
                         <div class="moveBtn">
-                        <button class="button" onclick="moveRoomUp()">  Move North </button>
-                        <button class="button" onclick="moveRoomDown()"> Move South </button>
-                        <button class="button" onclick="moveRoomRight()"> Move East </button>
-                        <button class="button" onclick="moveRoomLeft()"> Move West </button>
+                            <button class="button" onclick="moveRoomUp()">Move North</button>
+                        
+                        <div class="moveBtn">
+                            <button class="button" onclick="moveRoomLeft()">Move West</button>
+                            <button class="button" onclick="moveRoomDown()">Move South</button>
+                            <button class="button" onclick="moveRoomRight()">Move East</button>
+                        </div>
                         </div>`
     }
     
@@ -200,20 +212,51 @@ const moveRoomRight = () =>
 const look = () =>
 {
     textBox.innerHTML = `${currentRoom.description}`
-    if(currentRoom.item === true)
+    if((currentRoom.item == true) || (currentRoom.occupied == true))
     {
     textBox.append(`You see an ${currentRoom.inventory[0].name} here.`)
-    }
-    if(currentRoom.occupied === true)
-    {
     textBox.append(`You spot someone!`)
-    inputBox.append = `<button class="button" onclick=""> Approach </button>`
+    inputBox.innerHTML = 
+    `
+        <div class = "input">
+        <button class="button" onclick="look()">Look Around</button>
+        <button class="button" onclick="pickUpItem()">Pick Up Item</button>
+        <button class="button" onclick="pickUpItem()">Approach</button>
+        </div>
+    <div class = "moveBox">
+    
+    <div class="moveBtn">
+        <button class="button" onclick="moveRoomUp()">Move North</button>
+    
+    <div class="moveBtn">
+        <button class="button" onclick="moveRoomLeft()">Move West</button>
+        <button class="button" onclick="moveRoomDown()">Move South</button>
+        <button class="button" onclick="moveRoomRight()">Move East</button>
+    </div>
+    </div>
+    </div>`
+    }
+    else
+    {
+        inputBox.innerHTML = 
+        `
+            <div class = "input">
+            <button class="button" onclick="look()"> Look Around </button>
+            </div>
+        <div class = "moveBox">
+        
+        <div class="moveBtn">
+            <button class="button" onclick="moveRoomUp()">Move North</button>
+        
+        <div class="moveBtn">
+            <button class="button" onclick="moveRoomLeft()">Move West</button>
+            <button class="button" onclick="moveRoomDown()">Move South</button>
+            <button class="button" onclick="moveRoomRight()">Move East</button>
+        </div>
+        </div>
+        </div>`
     }
 }
-
-
-//EXTRAS 1
-//Have Inventory and use button to open inventory, which is list
 const pickUpItem = () =>
 {
     if(currentRoom.item === true)
@@ -222,6 +265,7 @@ const pickUpItem = () =>
     inventory.push(currentRoom.inventory[0])
     currentRoom.inventory.pop()
     size++
+    inventorylist.innerHTML += `<button class="inventoryitem" onclick="selectItem()">${inventory[size].name}</button>`
     console.log((`${inventory[size].name} is now in your inventory.`))
     currentRoom.item = false
     }
@@ -233,14 +277,78 @@ const pickUpItem = () =>
 
 const dropItem = () =>
 {
-    textBox.innerHTML = `You place ${inventory[size]}`
+    textBox.innerHTML = `You place ${inventory[size]} in the room.`
 }
 
+const selectItem = () =>
+{
+    textBox.innerHTML = `${inventory[size].examine}`
+    if(inventory[size].canBeUsed === true)
+    {
+        textBox.innerHTML += `This item could be used for something.`
+        inputBox.innerHTML = 
+        `
+        <div class = "input">
+        <button class="button" onclick="look()"> Look Around </button>
+        <button class="button" onclick="useItem()">Use Item</button>
+        </div>
+
+    <div class = "moveBox">
+
+    <div class="moveBtn">
+        <button class="button" onclick="moveRoomUp()">Move North</button>
+    
+    <div class="moveBtn">
+        <button class="button" onclick="moveRoomLeft()">Move West</button>
+        <button class="button" onclick="moveRoomDown()">Move South</button>
+        <button class="button" onclick="moveRoomRight()">Move East</button>
+    </div>
+    </div>
+    </div>`
+    }
+}
+
+const useItem = () => 
+{
+    textBox.innerHTML = "Would you like to use the item?"
+    inputBox.innerHTML = 
+    `
+        <div class = "input">
+        <button class="button" onclick="yesItemUse()">Yes</button>
+        <button class="button" onclick="noItemUse()">No</button>
+        </div>
+    `
+}
+
+const yesItemUse = () => {}
+
+const noItemUse = () => 
+{
+    textBox.innerHTML = "You decide not to use the item."
+    inputBox.innerHTML = 
+    `
+        <div class = "input">
+        <button class="button" onclick="look()"> Look Around </button>
+        </div>
+
+    <div class = "moveBox">
+    
+    <div class="moveBtn">
+        <button class="button" onclick="moveRoomUp()">Move North</button>
+    
+    <div class="moveBtn">
+        <button class="button" onclick="moveRoomLeft()">Move West</button>
+        <button class="button" onclick="moveRoomDown()">Move South</button>
+        <button class="button" onclick="moveRoomRight()">Move East</button>
+    </div>
+    </div>
+    </div>`
+}
+
+//EXTRAS 1
+//Have Inventory and use button to open inventory, which is list
 
 
-
-//Pick up [object.name] / Adds item to list
-//Use [object.name] / If it has a function, it will do it, and then remove itself from list if needed
 
 
 

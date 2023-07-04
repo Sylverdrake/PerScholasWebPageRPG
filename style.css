@@ -19,27 +19,39 @@ body {
 
 .contentBox {
     border: solid blue;
-    width: 15%;
-
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-between;
+    word-break: normal;
+    width: 30%;
+    height: 70vh;
 }
 
 .textBox {
     border: solid green;
     width: 100%;
-    
+    text-align: left;
 }
 
 .inputBox {
     border: solid orange;
-    display: flex;
-    justify-content: center;
-    align-self: flex-end;
-    margin: 1em;
+    
 }
 
-.moveBtn {
-    border: solid pink;
+.input {
+    border: solid;
     display: flex;
+    justify-content: center;
+}
+
+.button {
+    /* border: solid green; */
+    width: 7vh;
+    height: 4.5vh;
+    overflow-wrap: normal;
+    margin: 2px;
+    text-align: center;
 }
 
 .player {
@@ -52,4 +64,9 @@ body {
     border: solid;
     text-align: center;
     width: 10%;
+}
+
+li {
+    border: solid green;
+    list-style-type: none;
 }
