@@ -20,7 +20,7 @@ body {
 .contentBox {
     border: solid blue;
     width: 15%;
-    height: 15%;
+
 }
 
 .textBox {
@@ -33,11 +33,23 @@ body {
     border: solid orange;
     display: flex;
     justify-content: center;
+    align-self: flex-end;
     margin: 1em;
+}
+
+.moveBtn {
+    border: solid pink;
+    display: flex;
 }
 
 .player {
     border: solid green;
     width: 40px;
     height: 40px;
+}
+
+.sideBox {
+    border: solid;
+    text-align: center;
+    width: 10%;
 }
