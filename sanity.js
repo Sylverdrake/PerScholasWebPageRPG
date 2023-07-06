@@ -43,7 +43,7 @@ class Entity
 
 const player = new Entity("Testman", 100, randomStat(1,5), 8, 12)
 let inventory = []
-let size = -1
+let selected = 0
 
 // let selected = 0
 
@@ -69,6 +69,11 @@ class Item
 }
 
 const item = new Item("Item of Testing", "If you are seeing this, I messed up somewhere.", true)
+const item2 = new Item("Sword of Testing", "How did you get this?", true)
+const item3 = new Item("Shield of Testing", "Why did you get this?", true)
+const item4 = new Item("Chalice of Testing", "Can you drink from this?", true)
+const item5 = new Item("Cube of Testing", "Can you eat it?", true)
+const item6 = new Item("Sphere of Testing", "It spheres menacingly.", true)
 
 //ROOMS
 
@@ -88,11 +93,21 @@ class Room
 let room1 = new Room("Starting Room", "You stand in a completely white room. There is no beginning, and no end. You aren't sure if you are dead.", one, true, true, 0)
 room1.inventory = [item]
 
-let room2 = new Room("Second Room", "You stand in a completely red room.", two, false, 0)
-let room3 = new Room("Third Room", "You stand in a completely blue room.", three, false, 0)
-let room4 = new Room("Fourth Room", "You stand in a completely green room.", four, false, 0)
-let room5 = new Room("Fifth Room", "You stand in a completely yellow room.", five, false, 0)
-let room6 = new Room("Sixth Room", "You stand in a completely orange room.", six, false, 0)
+let room2 = new Room("Second Room", "You stand in a completely red room.", two, true, false, 0)
+room2.inventory = [item2]
+
+let room3 = new Room("Third Room", "You stand in a completely blue room.", three, true, false, 0)
+room3.inventory = [item3]
+
+let room4 = new Room("Fourth Room", "You stand in a completely green room.", four, true, false, 0)
+room4.inventory = [item4]
+
+let room5 = new Room("Fifth Room", "You stand in a completely yellow room.", five, true, false, 0)
+room5.inventory = [item5]
+
+let room6 = new Room("Sixth Room", "You stand in a completely orange room.", six, true, false, 0)
+room6.inventory = [item6]
+
 
 let map =
 [
@@ -212,16 +227,21 @@ const moveRoomRight = () =>
 const look = () =>
 {
     textBox.innerHTML = `${currentRoom.description}`
-    if((currentRoom.item == true) || (currentRoom.occupied == true))
+    if(currentRoom.item === true)
     {
     textBox.append(`You see an ${currentRoom.inventory[0].name} here.`)
+    }
+    {
+    if(currentRoom.occupied === true)
+    {
     textBox.append(`You spot someone!`)
+    }
     inputBox.innerHTML = 
     `
         <div class = "input">
         <button class="button" onclick="look()">Look Around</button>
         <button class="button" onclick="pickUpItem()">Pick Up Item</button>
-        <button class="button" onclick="pickUpItem()">Approach</button>
+        <button class="button" onclick="approach()">Approach</button>
         </div>
     <div class = "moveBox">
     
@@ -236,37 +256,21 @@ const look = () =>
     </div>
     </div>`
     }
-    else
-    {
-        inputBox.innerHTML = 
-        `
-            <div class = "input">
-            <button class="button" onclick="look()"> Look Around </button>
-            </div>
-        <div class = "moveBox">
-        
-        <div class="moveBtn">
-            <button class="button" onclick="moveRoomUp()">Move North</button>
-        
-        <div class="moveBtn">
-            <button class="button" onclick="moveRoomLeft()">Move West</button>
-            <button class="button" onclick="moveRoomDown()">Move South</button>
-            <button class="button" onclick="moveRoomRight()">Move East</button>
-        </div>
-        </div>
-        </div>`
-    }
 }
+
+//Inventory
+
+
+
 const pickUpItem = () =>
 {
     if(currentRoom.item === true)
     {
     textBox.innerHTML = `You pick up ${currentRoom.inventory[0].name} and add it to your inventory.`
     inventory.push(currentRoom.inventory[0])
+    inventorylist.innerHTML += `<li>${inventory[selected].name}</li>`
     currentRoom.inventory.pop()
-    size++
-    inventorylist.innerHTML += `<button class="inventoryitem" onclick="selectItem()">${inventory[size].name}</button>`
-    console.log((`${inventory[size].name} is now in your inventory.`))
+    console.log((`${inventory[selected].name} is now in your inventory.`))
     currentRoom.item = false
     }
     else
@@ -275,10 +279,31 @@ const pickUpItem = () =>
     }
 }
 
-const dropItem = () =>
+//selectUp
+const selectUp = () =>
 {
-    textBox.innerHTML = `You place ${inventory[size]} in the room.`
+
 }
+//selectDown
+const selectDown = () =>
+{
+
+}
+//move arrows between different items
+
+
+
+//Problem: When an item is selected, it uses the last element in the array as the selected element.
+//Question: How can I equate the element that is being clicked on as to what is being selected
+
+//I want to:
+//Select the item so I can:
+
+//Examine the Item (hint where to use it)
+//Place/Drop the item (place it in the room to do a thing)
+//Use/Equip?? item
+//Back Button
+
 
 const selectItem = () =>
 {
@@ -308,48 +333,23 @@ const selectItem = () =>
     }
 }
 
-const useItem = () => 
+const dropItem = () =>
 {
-    textBox.innerHTML = "Would you like to use the item?"
-    inputBox.innerHTML = 
-    `
-        <div class = "input">
-        <button class="button" onclick="yesItemUse()">Yes</button>
-        <button class="button" onclick="noItemUse()">No</button>
-        </div>
-    `
+    textBox.innerHTML = `You place ${inventory[size]} in the room.`
 }
 
-const yesItemUse = () => {}
+//NPC 
 
-const noItemUse = () => 
-{
-    textBox.innerHTML = "You decide not to use the item."
-    inputBox.innerHTML = 
-    `
-        <div class = "input">
-        <button class="button" onclick="look()"> Look Around </button>
-        </div>
+//TALK TO
+//I WANT TO ASK QUESTIONS
+//END CONVERSATION
 
-    <div class = "moveBox">
-    
-    <div class="moveBtn">
-        <button class="button" onclick="moveRoomUp()">Move North</button>
-    
-    <div class="moveBtn">
-        <button class="button" onclick="moveRoomLeft()">Move West</button>
-        <button class="button" onclick="moveRoomDown()">Move South</button>
-        <button class="button" onclick="moveRoomRight()">Move East</button>
-    </div>
-    </div>
-    </div>`
-}
-
-//EXTRAS 1
-//Have Inventory and use button to open inventory, which is list
-
-
-
+//IF THEY ARE ENEMY
+//ENGAGE IN COMBAT
+//HAVE COMBAT IN THE TEXTBOX?
+//TURN BASED?
+//RUN?
+//USE ITEM?
 
 
 
