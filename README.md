@@ -1,4 +1,4 @@
-First Fantasy - A Very Basic Text-Based RPG Demo
+--- First Fantasy - A Very Basic Text-Based RPG Demo ---
 A DOM based Web Game - Written in HTML, CSS, and Javascript
 
 In this very silly and very short game, you are the Probably Chosen One. That is to say, you are the hero of this land blessed by 
