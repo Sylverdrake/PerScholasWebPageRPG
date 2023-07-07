@@ -3,6 +3,11 @@ let inputBox = document.querySelector(".inputBox")
 let textBox = document.querySelector(".textBox")
 let mapLocation = document.querySelector(".mapLocation")
 let inventorylist = document.querySelector(".inventory")
+let playerName = document.querySelector(".playerName")
+let playerHP = document.querySelector(".playerStatHP")
+let playerDamage = document.querySelector(".playerStatDamage")
+let playerAcc = document.querySelector(".playerStatAccuracy")
+let playerWeapon = document.querySelector(".playerWeapon")
 
 const one = document.getElementById("room1")
 const two = document.getElementById("room2")
@@ -25,44 +30,55 @@ const clearBtns = () =>
     inputBox.innerHTML = ""
 }
 
+class Weapon
+{
+    constructor(name, adjective, damage, minDmg, maxDmg)
+    {
+        this.name = name,
+        this.adjective = adjective,
+        this.damage = damage,
+        this.minDmg = minDmg,
+        this.maxDmg = maxDmg
+    }
+}
+
+const claws = new Weapon("Small Claws", "shreds", randomStat(1,2))
+const claws2 = new Weapon("Dire Claws","shreds", randomStat(3,5))
+const claws3 = new Weapon("Ripper Claws","shreds", randomStat(5,10))
+const fists = new Weapon ("Fists","punches", randomStat(2,4), 2, 4)
+const sword = new Weapon ("Sword","slashes", randomStat(6,9), 6, 9)
+
 
 //Entities
 
 class Entity
 {
-    constructor(name, hp, damage, accuracy, alive, hostile)
+    constructor(name, hp, weapon, accuracy, speed)
     {
         this.name = name,
         this.hp = hp,
-        this.damage = damage,
-        this.accuracy = accuracy
-        this.alive = alive,
-        this.hostile = hostile
+        this.weapon = weapon,
+        this.accuracy = accuracy,
+        this.speed = speed
+        this.weapon = weapon
     }
 }
 
-const player = new Entity("Testman", 100, randomStat(1,5), 5)
-// let inventory = []
-// let selected = 0
-
-// // let selected = 0
-
-// // let selectedItem = inventory[selected]
+//Player
+const player = new Entity("", 100, fists, 8, 3)
 
 
 //Enemy
-const rat = new Entity("Rat", 5, randomStat(1,2), 2, true, true)
-console.log(rat);
-const biggerRat = new Entity("Bigger Rat", 20, randomStat(3,5), 3, true, true)
-const biggestRat = new Entity("Rat Supreme", 50, randomStat(5,10), 4, true, true)
+const rat = new Entity("Rat", 5, claws, 5, 1)
+const biggerRat = new Entity("Bigger Rat", 20, claws2, 6, 3)
+const biggestRat = new Entity("Rat Supreme", 50, claws3, 7, 4)
+
 
 //NPC
-
-class NPC extends Entity
+class NPC
 {
     constructor(greeting, questionA, dialogueA, questionB, dialogueB, questionC, dialogueC, goodbye, visited, returnvisit)
     {
-        super()
         this.greeting = greeting,
         this.questionA = questionA,
         this.dialogueA = dialogueA,
@@ -125,16 +141,29 @@ class NPC extends Entity
 
 const gerret = new NPC 
 ( 
-`Ah, yewr fin'lly awake. My name es Gerret. Been stuck here a lot long'r ten yew ah reckon. A'm sure yewr jus' absolutely rife wit' questions. Ask away, lad.`,
+`<p>
+Ah, yewr fin'lly awake. My name es Gerret. Been stuck here a lot long'r ten yew ah reckon. A'm sure yewr jus' absolutely rife wit' questions. Ask away, lad.
+</p>`,
 'Where am I?',
-"Must've 'ad one helluva night din't yew. Dis here es tha' jail undeh Lord Worchestershiresons-on-the-moor's castle. Dis es where awl tha' threats to tha' overarching antagonist plot go. Tat's ta' say...we are threats ta' tha' Demon Lord Emperor uv' Kinging's reign uv' terror an' mus' be locked up so 'e can rule tha' lan' wit' an iron fist un'bated by hero types like yew an' meself.",
+`<p>
+Must've 'ad one helluva night din't yew. Dis here es tha' jail undeh Lord Worchestershiresons-on-the-moor's castle. Dis es where awl tha' threats to tha' overarching antagonist plot go. Tat's ta' say...we are threats ta' tha' Demon Lord Emperor uv' Kinging's reign uv' terror an' mus' be locked up so 'e can rule tha' lan' wit' an iron fist un'bated by hero types like yew an' meself.
+</p>`,
 "The who, what, why?",
-"Aye, da Demon Lord Emperor of Kinging. Or Jeff. Either works ah s'pose. Fella came here from down awn Northingtonshire uv' Southoverportington wit' a chip uv' tha' Great Power Crystal en hees shouldah an' no one 'as been able ta' stop 'im, but maybe thing'll change. He did only start 'is reign awn Porridge Day. Jus' us down 'ere now awn account uv' da' new world order an' awl dat nonsense.",
+`<p>
+Aye, da Demon Lord Emperor of Kinging. Or Jeff. Either works ah s'pose. Fella came here from down awn Northingtonshire uv' Southoverportington wit' a chip uv' tha' Great Power Crystal en hees shouldah an' no one 'as been able ta' stop 'im, but maybe thing'll change. He did only start 'is reign awn Porridge Day. Jus' us down 'ere now awn account uv' da' new world order an' awl dat nonsense.
+</p>`,
 "What is...Porridge Day???",
-"Porridge Day es tha' day we get Porridge o' course!. So...Toosday or summtin. Dis is all ah know sadly. Been stuck 'ere since Porridge Day meself. But ah haven't lef' awn account uv da rats. We could leave if ya' take care uv dose tings. Ef dey was smaller, woulda kept 'em as pets ah wooduv.",
-"Good luck an' all that. Maybe yew can be tha' pest exterminator we need.",
+`<p>
+Porridge Day es tha' day we get Porridge o' course!. So...Toosday or summtin. Dis is all ah know sadly. Been stuck 'ere since Porridge Day meself. But ah haven't lef' awn account uv da rats. We could leave if ya' take care uv dose tings. Ef dey was smaller, woulda kept 'em as pets ah wooduv.
+</p>`,
+`<p>
+Good luck an' all that. Maybe yew can be tha' pest exterminator we need.
+</p>`,
 false,
-"Back 'gain are we? Needy lil' fella aren't yew. Ah got answahs ef ye gawt questions.")
+`</p>
+Back 'gain are we? Needy lil' fella aren't yew. Ah got answahs ef ye gawt questions.
+</p>`
+)
 
 //Items
 class Item
@@ -158,38 +187,36 @@ class Item
 
 class Room
 {
-    constructor(name, description, id, item, occupied, inventory, occupier, hostile)
+    constructor(name, description, occupied, hostile, occupier)
     {
         this.name = name,
         this.description = description,
-        this.id = id,
-        this.item = item
         this.occupied = occupied,
-        this.inventory = inventory,
+        this.hostile = hostile,
         this.occupier = occupier
-        this.hostile = hostile
+
     }
 }
 
-let room1 = new Room("The Gaol", "You stand in a dank, square room with little light trickling in via an iron grate. Unsavoury pungent odors waft through the chamber and you hear chittering past a large metal bars that have been thrown open.", one, true, true, 0, gerret)
+let room1 = new Room("The Gaol", `<p>You stand in a dank, square room with little light trickling in via an iron grate. Unsavoury pungent odors waft through the chamber and you hear chittering past a large metal bars that have been thrown open.</p>`, true, false, gerret)
 // room1.inventory = [item]
 
-let room2 = new Room("Second Room", "You stand in a completely red room.", two, true, false, 0)
+let room2 = new Room("Second Room", "You stand in a completely red room.", false, false)
 // room2.inventory = [item2]
 
-let room3 = new Room("Third Room", "You stand in a completely blue room.", three, true, false, 0, rat, true)
+let room3 = new Room("Third Room", "You stand in a completely blue room.", true, true, rat)
 // room3.inventory = [item3]
 
-let room4 = new Room("Fourth Room", "You stand in a completely green room.", four, true, false, 0)
+let room4 = new Room("Fourth Room", "You stand in a completely green room.", true, false)
 // room4.inventory = [item4]
 
-let room5 = new Room("Fifth Room", "You stand in a completely yellow room.", five, true, false, 0)
+let room5 = new Room("Fifth Room", "You stand in a completely yellow room.", false, false)
 // room5.inventory = [item5]
 
-let room6 = new Room("Sixth Room", "You stand in a completely orange room.", six, true, false, 0)
+let room6 = new Room("Sixth Room", "You stand in a completely orange room.", false, false)
 // room6.inventory = [item6]
 
-
+//Global Variables
 let map =
 [
         [room1, room2],
@@ -206,14 +233,32 @@ let horizontalMove = 0;
 let currentRoom = map[verticalMove][horizontalMove];
 
 let currentNPC = currentRoom.occupier
+let nameChoice = prompt(`${player.name}`)
 
+let danger = 3;
+
+const win = () =>
+{
+    if(danger === 0)
+    {
+        textBox.innerHTML = `<p>
+                            You have cleared the castle dungeon! Why are you still here? Get Gerret and go!
+                            </p>`
+    }
+}
 
 //START
 const start = () =>
 {
     {
-    textBox.innerHTML = `You wake up in ${currentRoom.name}. What would you like to do?`;
-    mapLocation.innerHTML = `${currentRoom.name}`;
+    textBox.innerHTML = 
+                            `<p>
+                            ${nameChoice} wakes up in ${currentRoom.name}. What would you like to do?
+                            </p>`;
+    mapLocation.innerHTML = 
+                            `<p>
+                            ${currentRoom.name}
+                            </p>`;
     clearBtns();
     inputBox.innerHTML = 
                         `
@@ -233,9 +278,14 @@ const start = () =>
                             <button class="button" onclick="moveRoomRight()">Move East</button>
                         </div>
                         </div>`
+    playerName.innerHTML = `${nameChoice}`
+    playerHP.innerHTML = `${player.hp}`
+    playerDamage.innerHTML = `${player.weapon.minDmg} - ${player.weapon.maxDmg}`
+    playerAcc.innerHTML = `${player.accuracy}`
+    playerWeapon.innerHTML = `${player.weapon.name}`
     }
-    
 }
+
 
 
 //MOVEMENT 
@@ -249,14 +299,24 @@ const moveRoomUp = () =>
 {
     if (verticalMove-1 < 0)
     {
-        textBox.innerHTML = "You try to go further North. You can't move here.";
+        textBox.innerHTML = 
+                            `<p>
+                            You try to go further North. You can't move here.
+                            </p>`;
     }
     else
     {
         verticalMove--
         currentRoom = map[verticalMove][horizontalMove]
-        textBox.innerHTML = `You go North. You are now in ${currentRoom.name}`;
-        mapLocation.innerHTML = `${currentRoom.name}`;
+        textBox.innerHTML = 
+                            `<p>
+                            You go North. You are now in ${currentRoom.name}
+                            </p>`;
+
+        mapLocation.innerHTML = 
+                                `<p>
+                                ${currentRoom.name}
+                                </p>`;
         encounter();
     }
 }
@@ -265,14 +325,24 @@ const moveRoomDown = () =>
 {
     if (verticalMove+1 > 2)
     {
-        textBox.innerHTML = "You try to go further. You can't move here.";
+        textBox.innerHTML = 
+                            `<p>
+                            You try to go further South. You can't move here.
+                            </p>`;
     }
     else
     {
         verticalMove++
         currentRoom = map[verticalMove][horizontalMove]
-        textBox.innerHTML = `You go South. You are now in ${currentRoom.name}`;
-        mapLocation.innerHTML = `${currentRoom.name}`;
+        textBox.innerHTML = 
+                            `<p>
+                            You go South. You are now in ${currentRoom.name}
+                            </p>`;
+
+        mapLocation.innerHTML = 
+                                `<p>
+                                ${currentRoom.name}
+                                </p>`;
         encounter();
     }
 }
@@ -281,14 +351,24 @@ const moveRoomLeft = () =>
 {
     if (horizontalMove-1 < 0)
     {
-        textBox.innerHTML = "You try to go further. You can't move here.";
+        textBox.innerHTML = 
+                            `<p>
+                            You try to go further West. You can't move here.
+                            </p>`;
     }
     else
     {
         horizontalMove--
         currentRoom = map[verticalMove][horizontalMove]
-        textBox.innerHTML =`You are now in ${currentRoom.name}`;
-        mapLocation.innerHTML = `${currentRoom.name}`;
+        textBox.innerHTML =
+                            `<p>
+                            You are now in ${currentRoom.name}
+                            </p>`;
+
+        mapLocation.innerHTML = 
+                                `<p>
+                                ${currentRoom.name}
+                                </p>`;
         encounter();
     }
 }
@@ -297,14 +377,24 @@ const moveRoomRight = () =>
 {
     if (horizontalMove+1 > 1)
     {
-        textBox.innerHTML ="You try to go further. You can't move here.";
+        textBox.innerHTML = 
+                            `<p>
+                            You try to go further East. You can't move here.
+                            </p>`;
     }
     else
     {
         horizontalMove++
         currentRoom = map[verticalMove][horizontalMove]
-        textBox.innerHTML =`You are now in ${currentRoom.name}`;
-        mapLocation.innerHTML = `${currentRoom.name}`;
+        textBox.innerHTML =
+                            `<p>
+                            You are now in ${currentRoom.name}
+                            </p>`;
+
+        mapLocation.innerHTML = 
+                                `<p>
+                                ${currentRoom.name}
+                                </p>`;
         encounter();
     }
 }
@@ -356,98 +446,26 @@ const talk = () =>
     currentNPC.visited = true
 }
 
-
 const encounter = () =>
 {
-    if(currentNPC.hostile === true)
+    if(currentRoom.hostile === true)
     {
-        textBox.innerHTML = "An enemy approaches!"
+        if(player.speed > currentRoom.occupier.speed)
+        {
+            textBox.innerHTML = `A ${currentRoom.occupier.name} approaches!`
+            checkPlayerHP()
+        }
+        else
+        {
+            enemyTurn();
+        }
+    }
+    else
+    {
+        console.log("No fights here.");
     }
 }
-//Inventory
 
-// const pickUpItem = () =>
-// {
-//     if(currentRoom.item === true)
-//     {
-//     textBox.innerHTML = `You pick up ${currentRoom.inventory[0].name} and add it to your inventory.`
-//     inventory.push(currentRoom.inventory[0])
-//     inventorylist.innerHTML += `<li>${inventory[selected].name}</li>`
-//     currentRoom.inventory.pop()
-//     console.log((`${inventory[selected].name} is now in your inventory.`))
-//     currentRoom.item = false
-//     }
-//     else
-//     {
-//         textBox.innerHTML = ("There is nothing here to take.")
-//     }
-// }
-
-
-//Problem: When an item is selected, it uses the last element in the array as the selected element.
-//Question: How can I equate the element that is being clicked on as to what is being selected
-
-//I want to:
-//Select the item so I can:
-
-//Examine the Item (hint where to use it)
-//Place/Drop the item (place it in the room to do a thing)
-//Use/Equip?? item
-//Back Button
-
-
-// const selectItem = () =>
-// {
-//     textBox.innerHTML = `${inventory[size].examine}`
-//     if(inventory[size].canBeUsed === true)
-//     {
-//         textBox.innerHTML += `This item could be used for something.`
-//         inputBox.innerHTML = 
-//         `
-//         <div class = "input">
-//         <button class="button" onclick="look()"> Look Around </button>
-//         <button class="button" onclick="useItem()">Use Item</button>
-//         </div>
-
-//     <div class = "moveBox">
-
-//     <div class="moveBtn">
-//         <button class="button" onclick="moveRoomUp()">Move North</button>
-    
-//     <div class="moveBtn">
-//         <button class="button" onclick="moveRoomLeft()">Move West</button>
-//         <button class="button" onclick="moveRoomDown()">Move South</button>
-//         <button class="button" onclick="moveRoomRight()">Move East</button>
-//     </div>
-//     </div>
-//     </div>`
-//     }
-// }
-
-// const dropItem = () =>
-// {
-//     textBox.innerHTML = `You place ${inventory[size]} in the room.`
-// }
-
-//NPC 
-
-//TALK TO
-//I WANT TO ASK QUESTIONS
-//END CONVERSATION
-
-//IF THEY ARE ENEMY
-//ENGAGE IN COMBAT
-//HAVE COMBAT IN THE TEXTBOX?
-//TURN BASED?
-//RUN?
-//USE ITEM?
-
-
-
-
-
-
-//Step 4. Encounter enemy in room, and fight. 
 //random
 function randomStat(min, max) 
 {
@@ -456,70 +474,168 @@ function randomStat(min, max)
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-// let playerAttackRoll = randomStat(1,20) + player.attack
-// let compAttackRoll = randomStat(1,20) + enemy.attack
+let currentWeapon = player.weapon
 
-// //COMBAT
-// //NOTE: IF THE DISTANCE BETWEEN THE OBJECTS ATTACK AND DEFENSE IS GREATER 4, CAUSES LOOP
-// //MAYBE FIX IT TO SOMETHING DIFFERENT???
-// //Player Turn
-// const playerTurn = () => 
-// {
-//     if (playerAttackRoll >= enemy.defense)
-//     {      
-//         console.log("Player Hit");
-//         enemy.hp -= player.damage
-//         console.log(`Enemy takes ${player.damage} damage. and has ${enemy.hp} remaining`);
-//         checkEnemyHP();
-//     }
-//     else
-//     {
-//         console.log("Player Miss");
-//         checkEnemyHP();
-//     }
-// }
+//COMBAT
+//NOTE: IF THE DISTANCE BETWEEN THE OBJECTS ATTACK AND DEFENSE IS GREATER 4, CAUSES LOOP
+//MAYBE FIX IT TO SOMETHING DIFFERENT???
+//Player Turn
+const attack = () =>
+{
+    if (randomStat(1, 10) < player.accuracy)
+    {
+        currentRoom.occupier.hp -= currentWeapon.damage
+        textBox.innerHTML += 
+        `<p>
+        ${nameChoice} ${currentWeapon.adjective} the ${currentRoom.occupier.name} with their ${currentWeapon.name} and deals ${currentWeapon.damage} damage.
+        </p>`;
+        checkEnemyHP();
+    }
+    else
+    {
+        textBox.innerHTML += ` ${nameChoice} misses their attack!`
+        checkEnemyHP();
+    }
+}
 
-// //Check Enemy Life
-// const checkEnemyHP = () =>
-// {
-//     if (enemy.hp <= 0)
-//     {
-//         console.log("The enemy is defeated.");
-//     }
-//     else {
-//         console.log("Enemy's turn.");
-//         enemyTurn();
-//     }
-// }
+//Check Enemy Life
+const checkEnemyHP = () =>
+{
+    if (currentRoom.occupier.hp <= 0)
+    {
+        textBox.innerHTML += 
+        `<p>
+        The ${currentRoom.occupier.name} is defeated! You feel like you would have gained some experience for this and money would have mysteriously materialized. You aren't sure why.
+        </p>`;
+        danger--;
+        currentRoom.hostile = false;
+        currentRoom.occupied = false;
+        inputBox.innerHTML = 
+        `
+        <div class = "input">
+            <button class="button" onclick="look()"> Look Around </button>
+            <button class="button" onclick="approach()"> Approach</button>
+        </div>
 
-// //Enemy Turn
-// const enemyTurn = () => 
-// {
-//     if (compAttackRoll >= enemy.defense)
-//     {      
-//         console.log("Enemy Hit");
-//         player.hp -= enemy.damage
-//         console.log(`Player takes ${enemy.damage} damage and has ${player.hp} remaining`);
-//         checkPlayerHP();
-//     }
-//     else
-//     {
-//         console.log("Enemy Miss");
-//         checkPlayerHP();
-//     }
-// }
 
-// //Check Player Life
-// const checkPlayerHP = () =>
-// {
-//     if (player.hp <= 0)
-//     {
-//         console.log("You lose.");
-//     }
-//     else {
-//         console.log("Your turn.");
-//         playerTurn();
-//     }
-// }
+        
+        <div class="moveBtn">
+            <button class="button" onclick="moveRoomUp()">Move North</button>
+        
+        <div class="moveBtn">
+            <button class="button" onclick="moveRoomLeft()">Move West</button>
+            <button class="button" onclick="moveRoomDown()">Move South</button>
+            <button class="button" onclick="moveRoomRight()">Move East</button>
+        </div>
+        </div>`
+    }
+    else 
+    {
+        enemyTurn();
+    }
+}
+
+//Enemy Turn
+const enemyTurn = () => 
+{
+    if (randomStat(1, 10) < currentRoom.occupier.accuracy)
+    {    
+        player.hp -= currentRoom.occupier.weapon.damage  
+        textBox.innerHTML += 
+        `<p> 
+        ${currentRoom.occupier.name} ${currentRoom.occupier.weapon.adjective} ${nameChoice} for ${currentRoom.occupier.weapon.damage} damage!
+        </p>`;
+        playerHP.innerHTML = `${player.hp}`
+        checkPlayerHP();
+    }
+    else
+    {
+        textBox.innerHTML += 
+        `<p> 
+        ${currentRoom.occupier.name} misses their attack!
+        </p>`;
+        checkPlayerHP();
+    }
+}
+
+//Check Player Life
+const checkPlayerHP = () =>
+{
+    if (player.hp <= 0)
+    {
+        textBox.innerHTML += 
+        `<p>
+        You have perished in battle!.
+        </p>`;
+    }
+    else {
+        textBox.innerHTML += 
+        `<p>
+        It is your turn! The enemy has ${currentRoom.occupier.hp} HP remaining. What will you do?
+        </p>`
+        inputBox.innerHTML =
+        `
+        <div class = "input">
+            <button class="button" onclick="attack()">Attack</button>
+            <button class="button" onclick="run()">Run</button>
+        </div>
+        `
+    }
+}
+
+//Escape
+const run = () =>
+{
+    if(player.speed === randomStat(1,10))
+    {
+        textBox.innerHTML +=
+        `<p>
+        You have escaped combat. For now.
+        </p>`
+        inputBox.innerHTML = 
+        `
+        <div class = "input">
+            <button class="button" onclick="look()"> Look Around </button>
+            <button class="button" onclick="approach()"> Approach</button>
+        </div>
+
+
+        
+        <div class="moveBtn">
+            <button class="button" onclick="moveRoomUp()">Move North</button>
+        
+        <div class="moveBtn">
+            <button class="button" onclick="moveRoomLeft()">Move West</button>
+            <button class="button" onclick="moveRoomDown()">Move South</button>
+            <button class="button" onclick="moveRoomRight()">Move East</button>
+        </div>
+        </div>`
+        
+    }
+    else
+    {
+        
+        textBox.innerHTML =
+        `<p>
+        You have failed to escape combat! Time to fight!
+        </p>`
+        enemyTurn();
+    }
+}
+
+
+//encounter start
+//Encounter rolls to see what happens first.
+
+//Enemy goes first?
+//Textbox fills with the stuff
+//check for player alive
+//if player alive, start player turn
+
+//Player goes first
+//Player turn
+//Player can Attack or Run
+//Attack starts the loop
+//Run attempts to end combat.
 
 
