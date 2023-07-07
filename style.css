@@ -20,9 +20,8 @@ body {
 .contentBox {
     border: solid blue;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     text-align: center;
-    justify-content: space-between;
     word-break: normal;
     width: 30%;
     height: 70vh;
@@ -47,9 +46,8 @@ body {
 
 .button {
     /* border: solid green; */
-    width: 7vh;
-    height: 5vh;
-    overflow-wrap: normal;
+    width: 15vh;
+    height: 7vh;
     margin: 2px;
     text-align: center;
 }
