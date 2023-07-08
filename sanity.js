@@ -219,7 +219,7 @@ let currentRoom = map[verticalMove][horizontalMove];
 
 let currentNPC = currentRoom.occupier
 
-let nameChoice = prompt(`${player.name}`)
+let nameChoice = prompt(`Choose your character's name!`)
 
 let danger = 3;
 
