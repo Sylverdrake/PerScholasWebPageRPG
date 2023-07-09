@@ -1,6 +1,7 @@
 //document code | comment it out for further console testing because node.js hates dom
 let inputBox = document.querySelector(".inputBox")
 let textBox = document.querySelector(".textBox")
+let contentBox = document.querySelector(".contentBox")
 let mapLocation = document.querySelector(".mapLocation")
 let inventorylist = document.querySelector(".inventory")
 let playerName = document.querySelector(".playerName")
@@ -8,6 +9,12 @@ let playerHP = document.querySelector(".playerStatHP")
 let playerDamage = document.querySelector(".playerStatDamage")
 let playerAcc = document.querySelector(".playerStatAccuracy")
 let playerWeapon = document.querySelector(".playerWeapon")
+
+
+let hidden = document.querySelector(".hidden")
+let roomLocation = document.querySelector(".map")
+let room = document.querySelector(".room")
+// let portraitBox = document.querySelector(".portraitBox")
 
 const one = document.getElementById("room1")
 const two = document.getElementById("room2")
@@ -22,7 +29,7 @@ const six = document.getElementById("room6")
 //Clear functions
 const clearPage = () => 
 {
-    textBox.innerHTML = ""
+    textBox.innerHTML = " "
 }
 
 const clearBtns = () => 
@@ -30,6 +37,27 @@ const clearBtns = () =>
     inputBox.innerHTML = ""
 }
 
+//image stuff
+const portraitAppear = () =>
+{
+    hidden.setAttribute('src',"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.zeldadungeon.net%2Fwiki%2Fimages%2Ff%2Fff%2FOld-Man-LoZ-Sprite.png&f=1&nofb=1&ipt=268faedbaca884e13be860963de89c97701b0d1293be18a88b3cfa63d40d6b7e&ipo=images")
+    hidden.setAttribute('class', 'portraitBox')
+
+    contentBox.appendChild(hidden)
+
+}
+
+const monsterAppear = () =>
+{
+    hidden.setAttribute('src',"https://www.zeldadungeon.net/wiki/images/4/4e/Moblin-Blue-LoZ-Sprite.png")
+    hidden.setAttribute('class', 'portraitBox')
+    contentBox.appendChild(hidden)
+}
+
+const portraitDisappear = () =>
+{
+    contentBox.removeChild(hidden)
+}
 class Weapon
 {
     constructor(name, adjective, damage, minDmg, maxDmg)
@@ -69,9 +97,9 @@ const player = new Entity("", 100, fists, 8, 3)
 
 
 //Enemy
-const rat = new Entity("Rat", 5, claws, 5, 1)
-const biggerRat = new Entity("Bigger Rat", 20, claws2, 6, 3)
-const direRat = new Entity("Rat Supreme", 50, claws3, 7, 4)
+const rat = new Entity("Strange Rat", 5, claws, 5, 1)
+const biggerRat = new Entity("Monster Rat", 20, claws2, 6, 3)
+const direRat = new Entity("Mutant Rat", 50, claws3, 7, 4)
 
 
 //NPC
@@ -118,12 +146,14 @@ class NPC
 
     winVisit()
     {
-        alert(`Garret: "Sumbody 'as been busy 'aven't dey? Well, guess dere's no use stickin' 'round dis smelly place. Let's go!" + "You have won the game! Congratulations"`)
+        textBox.innerHTML = this.winvisit
+        alert("You beat the game!")
     }
 
     leaveConvo()
     {
         textBox.innerHTML = this.goodbye
+        portraitDisappear();
         inputBox.innerHTML = 
         `
         <div class = "input">
@@ -142,8 +172,11 @@ class NPC
             <button class="button" onclick="moveRoomRight()">Move East</button>
         </div>
         </div>`
+        
     }
 }
+
+
 
 const gerret = new NPC 
 ( 
@@ -169,16 +202,19 @@ false,
 `<p>
 Back 'gain are we? Needy lil' fella aren't yew. Ah got answahs ef ye gawt questions.
 </p>`,
-`<p>'umbody 'as been busy 'aven't dey? Well, guess dere's no use stickin' 'round dis smelly place. Let's go!</p>`
+`<p>
+Sumbody 'as been busy 'aven't dey? Well, guess dere's no use stickin' 'round dis smelly place. Let's go!
+</p>`
 )
 
 //ROOMS
 
 class Room
 {
-    constructor(name, description, occupied, hostile, occupier, inventory)
+    constructor(name, id, description, occupied, hostile, occupier, inventory)
     {
         this.name = name,
+        this.id = id,
         this.description = description,
         this.occupied = occupied,
         this.hostile = hostile,
@@ -188,17 +224,17 @@ class Room
     }
 }
 
-let room1 = new Room("The Gaol", `<p>You stand in a dank, square room with little light trickling in via an iron grate. Unsavoury pungent odors waft through the chamber and you hear chittering past a large metal bars that have been thrown open.</p>`, true, false, gerret)
+let room1 = new Room("The Gaol", one, `<p>You stand in a dank, square room with little light trickling in via an iron grate. Unsavoury pungent odors waft through the chamber and you hear chittering past large metal bars that have been thrown open.</p>`, true, false, gerret)
 
-let room2 = new Room("Second Room", `test2`, false, false)
+let room2 = new Room("The Dead Room", two, `<p>Like your cell, this room is equally dank and disgusting. Several corpses are strewn about. Previous inmates no dount. Thankfully it doesn't smell too bad.</p>`, false, false)
 
-let room3 = new Room("Third Room", `test3`, true, true, rat, sword)
+let room3 = new Room("Old Armoury", three, `<p>It is an absolute mess here. For some reason, the floor looks to have been dug up and a strange slime is smeared all over the floor. The trail leads out of this old armory. It seems that whatever was here, is thankfully gone.</p>`, true, true, rat, sword)
 
-let room4 = new Room("Fourth Room", `test4`, false, false)
+let room4 = new Room("Gaol Kitchen", four, `<p>A very poorly built kitchen was left in a hurry. Small rats and insects march off with spoiled spoils. None of the rotting food looks particularly appetizing and you are beginning to wonder, why were you expecting gourmet cuisine in a prison?</p>`, false, false)
 
-let room5 = new Room("Fifth Room", `test5`, true, true, biggerRat)
+let room5 = new Room("Alchemy Lab", five, `<p>Now that the large rat-thing is put to rest, you can safely look around the room. It is filled with forgotten tomes and empty vials. It seems some sort of potion-making went on down here.</p>`, true, true, biggerRat)
 
-let room6 = new Room("The Exit", `test6`, true, true, direRat)
+let room6 = new Room("The Exit", six, `<p>The way is clear, though the only obstacle seemed to be all the oversized vermin. There is a massive hole where the door used to be. Splintered wood and twisted metal litters the exit. Beyond the threshold is a twisting staircase leads to the unknown. You hear frustrated whisperings curl through the stairwell. Something about trying to add more arrays. Best to leave it be and get Gerret.</p>`, true, true, direRat)
 
 
 //Global Variables
@@ -217,18 +253,46 @@ let verticalMove = 0;
 let horizontalMove = 0;
 let currentRoom = map[verticalMove][horizontalMove];
 
+const mapAppear = () =>
+{
+    roomLocation.setAttribute('src', "https://archives.bulbagarden.net/media/upload/d/db/Blue_I_OD.png")
+    roomLocation.setAttribute('class', 'heroLocation')
+    room.appendChild(roomLocation)
+}
+
+const mapRemove = () =>
+{
+    room.removeChild(roomLocation)
+}
+
+const mapMove = () =>
+{
+
+}
+
+
+
+
+//I dont think this actually works the way I want it to but I'm too scared to remove
 let currentNPC = currentRoom.occupier
 
+
+
+//Name Choice
 let nameChoice = prompt(`Choose your character's name!`)
 
+
+
+
+//Win Condition
 let danger = 3;
 
 const win = () =>
 {
-    if(danger === 0)
+    if(danger <= 0)
     {
         textBox.innerHTML += `<p>
-                            You have cleared the castle dungeon! Why are you still here? Get Gerret and go!
+                            You have cleared the castle dungeon! Why are you still here? If you haven't found anyone in the dungeon so far, now is the time to look! Maybe check where you woke up?
                             </p>`
     }
 }
@@ -237,6 +301,7 @@ const win = () =>
 const start = () =>
 {
     {
+        mapAppear();
     textBox.innerHTML = 
                             `<p>
                             ${nameChoice} wakes up in ${currentRoom.name}. What would you like to do?
@@ -303,6 +368,7 @@ const moveRoomUp = () =>
                                 `<p>
                                 ${currentRoom.name}
                                 </p>`;
+        mapMove();
         encounter();
     }
 }
@@ -329,6 +395,7 @@ const moveRoomDown = () =>
                                 `<p>
                                 ${currentRoom.name}
                                 </p>`;
+        mapMove();
         encounter();
     }
 }
@@ -355,6 +422,7 @@ const moveRoomLeft = () =>
                                 `<p>
                                 ${currentRoom.name}
                                 </p>`;
+        mapMove();
         encounter();
     }
 }
@@ -381,6 +449,7 @@ const moveRoomRight = () =>
                                 `<p>
                                 ${currentRoom.name}
                                 </p>`;
+        mapMove();                      
         encounter();
     }
 }
@@ -398,10 +467,8 @@ const look = () =>
     }
     if(currentRoom.inventory === sword)
     {
-        textBox.innerHTML += 
-                            `<p>
-                            You spot something glistening in the muck...You feel like normally you would have a choice in if you wanted to pick it up or not, but your hands work faster than your mind and now you have a shiny Sword! It's almost like someone struggled really hard to make this more intuitive but as you begin to dwell on the idea, your nose begins to bleed. Best to stop thinking about it and get on with the adventuring, eh?
-                            </p>`
+        textBox.append(`You spot something glistening in the muck...You feel like normally you would have a choice in if you wanted to pick it up or not, but your hands work faster than your mind and now you have a shiny sword!`) 
+
         theSwordFunction();
     }
     
@@ -431,7 +498,6 @@ const talk = () =>
     }
     else
     {
-
         if(currentNPC.visited === false)
         {
         currentNPC.greet();
@@ -451,6 +517,7 @@ const talk = () =>
         `
         currentNPC.visited = true
     }
+    portraitAppear();
 }
 
 
@@ -458,14 +525,17 @@ const encounter = () =>
 {
     if(currentRoom.hostile === true)
     {
+        
         if(player.speed > currentRoom.occupier.speed)
         {
             textBox.innerHTML = `A ${currentRoom.occupier.name} approaches!`
             checkPlayerHP()
+            monsterAppear()
         }
         else
         {
             enemyTurn();
+            monsterAppear()
         }
     }
     else
@@ -499,6 +569,7 @@ const theSwordFunction = () =>
 //Player Turn
 const attack = () =>
 {
+    clearPage();
     if (randomStat(1, 10) < player.accuracy)
     {
         currentRoom.occupier.hp -= player.weapon.damage
@@ -520,14 +591,16 @@ const checkEnemyHP = () =>
 {
     if (currentRoom.occupier.hp <= 0)
     {
+        
         textBox.innerHTML = 
         `<p>
-        The ${currentRoom.occupier.name} is defeated! You feel like you would have gained some experience for this and money would have mysteriously materialized. You aren't sure why.
+        The ${currentRoom.occupier.name} is defeated! You feel like you should have gained some experience for this and money would have mysteriously materialized. You aren't sure why.
         </p>`;
         danger--;
         win();
         currentRoom.hostile = false;
         currentRoom.occupied = false;
+        
         inputBox.innerHTML = 
         `
         <div class = "input">
@@ -546,18 +619,20 @@ const checkEnemyHP = () =>
             <button class="button" onclick="moveRoomRight()">Move East</button>
         </div>
         </div>`
+        portraitDisappear();
     }
     else 
     {
         enemyTurn();
     }
+    
 }
 
 //Enemy Turn
 const enemyTurn = () => 
 {
     if (randomStat(1, 10) < currentRoom.occupier.accuracy)
-    {    
+    {   
         player.hp -= currentRoom.occupier.weapon.damage  
         textBox.innerHTML += 
         `<p> 
@@ -565,6 +640,7 @@ const enemyTurn = () =>
         </p>`;
         playerHP.innerHTML = `${player.hp}`
         checkPlayerHP();
+        
     }
     else
     {
@@ -574,6 +650,7 @@ const enemyTurn = () =>
         </p>`;
         checkPlayerHP();
     }
+    
 }
 
 //Check Player Life
@@ -635,7 +712,7 @@ const run = () =>
             <button class="button" onclick="moveRoomRight()">Move East</button>
         </div>
         </div>`
-        
+        portraitDisappear();
     }
     else
     {
@@ -650,6 +727,7 @@ const run = () =>
 
 const tryAgain = () =>
 {
+    portraitDisappear();
     verticalMove = 0
     horizontalMove = 0
     currentRoom = map[verticalMove][horizontalMove]
