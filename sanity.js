@@ -16,14 +16,16 @@ let roomLocation = document.querySelector(".map")
 let room = document.querySelector(".room")
 // let portraitBox = document.querySelector(".portraitBox")
 
-const one = document.getElementById("room1")
-const two = document.getElementById("room2")
-const three = document.getElementById("room3")
-const four = document.getElementById("room4")
-const five = document.getElementById("room5")
-const six = document.getElementById("room6")
-//one.appendChild(`<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwebstockreview.net%2Fimages%2Fclipart-people-symbol-5.png&f=1&nofb=1&ipt=5467de4e1a012e89de2fc93499d5e6bca2befc38aea594fe4c6bd9d89f44c578&ipo=images" alt="" class="player">`)
-//removeChild
+const one = document.querySelector("#room1")
+const two = document.querySelector("#room2")
+const three = document.querySelector("#room3")
+const four = document.querySelector("#room4")
+const five = document.querySelector("#room5")
+const six = document.querySelector("#room6")
+
+const hero = document.querySelector(".hero")
+
+
 
 
 //Clear functions
@@ -147,7 +149,6 @@ class NPC
     winVisit()
     {
         textBox.innerHTML = this.winvisit
-        alert("You beat the game!")
     }
 
     leaveConvo()
@@ -160,7 +161,6 @@ class NPC
             <button class="button" onclick="look()"> Look Around </button>
             <button class="button" onclick="approach()"> Approach</button>
         </div>
-
 
         
         <div class="moveBtn">
@@ -175,8 +175,6 @@ class NPC
         
     }
 }
-
-
 
 const gerret = new NPC 
 ( 
@@ -208,7 +206,6 @@ Sumbody 'as been busy 'aven't dey? Well, guess dere's no use stickin' 'round dis
 )
 
 //ROOMS
-
 class Room
 {
     constructor(name, id, description, occupied, hostile, occupier, inventory)
@@ -236,7 +233,6 @@ let room5 = new Room("Alchemy Lab", five, `<p>Now that the large rat-thing is pu
 
 let room6 = new Room("The Exit", six, `<p>The way is clear, though the only obstacle seemed to be all the oversized vermin. There is a massive hole where the door used to be. Splintered wood and twisted metal litters the exit. Beyond the threshold is a twisting staircase leads to the unknown. You hear frustrated whisperings curl through the stairwell. Something about trying to add more arrays. Best to leave it be and get Gerret.</p>`, true, true, direRat)
 
-
 //Global Variables
 let map =
 [
@@ -253,36 +249,11 @@ let verticalMove = 0;
 let horizontalMove = 0;
 let currentRoom = map[verticalMove][horizontalMove];
 
-const mapAppear = () =>
-{
-    roomLocation.setAttribute('src', "https://archives.bulbagarden.net/media/upload/d/db/Blue_I_OD.png")
-    roomLocation.setAttribute('class', 'heroLocation')
-    room.appendChild(roomLocation)
-}
-
-const mapRemove = () =>
-{
-    room.removeChild(roomLocation)
-}
-
-const mapMove = () =>
-{
-
-}
-
-
-
-
 //I dont think this actually works the way I want it to but I'm too scared to remove
 let currentNPC = currentRoom.occupier
 
-
-
 //Name Choice
 let nameChoice = prompt(`Choose your character's name!`)
-
-
-
 
 //Win Condition
 let danger = 3;
@@ -301,7 +272,6 @@ const win = () =>
 const start = () =>
 {
     {
-        mapAppear();
     textBox.innerHTML = 
                             `<p>
                             ${nameChoice} wakes up in ${currentRoom.name}. What would you like to do?
@@ -337,14 +307,41 @@ const start = () =>
     }
 }
 
-
+const roomId = currentRoom.id
+const moveHero = () =>
+{
+    if(currentRoom.id === one)
+    {
+        one.appendChild(hero)
+    }
+    if(currentRoom.id === two)
+    {
+        two.appendChild(hero)
+    }
+    if(currentRoom.id === three)
+    {
+        three.appendChild(hero)
+    }
+    if(currentRoom.id === four)
+    {
+        four.appendChild(hero)
+    }
+    if(currentRoom.id === five)
+    {
+        five.appendChild(hero)
+    }
+    if(currentRoom.id === six)
+    {
+        six.appendChild(hero)
+    }
+}
 
 //MOVEMENT 
 //Step 2. Checks if you can move to a room, if you can, do so
     //Problem: Want to check what direction you can move to successfully.
     //Solution: Do not go greater than or equal to the array.
 
-//When you move, move image of player as well. Somehow.
+//When you move, move image of player as well with append child based on id.
 //
 const moveRoomUp = () => 
 {
@@ -368,7 +365,7 @@ const moveRoomUp = () =>
                                 `<p>
                                 ${currentRoom.name}
                                 </p>`;
-        mapMove();
+                                moveHero();
         encounter();
     }
 }
@@ -395,7 +392,7 @@ const moveRoomDown = () =>
                                 `<p>
                                 ${currentRoom.name}
                                 </p>`;
-        mapMove();
+                                moveHero();
         encounter();
     }
 }
@@ -422,7 +419,8 @@ const moveRoomLeft = () =>
                                 `<p>
                                 ${currentRoom.name}
                                 </p>`;
-        mapMove();
+                                console.log(roomId);
+                                moveHero();
         encounter();
     }
 }
@@ -448,13 +446,12 @@ const moveRoomRight = () =>
         mapLocation.innerHTML = 
                                 `<p>
                                 ${currentRoom.name}
-                                </p>`;
-        mapMove();                      
+                                </p>`;   
+                                console.log(roomId);
+                                moveHero();                
         encounter();
     }
 }
-
-
 
 //INTERACTIONS
 const look = () =>
@@ -489,7 +486,6 @@ const approach = () =>
     }
 }
 
-
 const talk = () =>
 {
     if(danger === 0)
@@ -520,7 +516,6 @@ const talk = () =>
     portraitAppear();
 }
 
-
 const encounter = () =>
 {
     if(currentRoom.hostile === true)
@@ -543,7 +538,6 @@ const encounter = () =>
         console.log("No fights here.");
     }
 }
-
 
 //random math is random
 function randomStat(min, max) 

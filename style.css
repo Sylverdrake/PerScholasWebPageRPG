@@ -53,7 +53,7 @@ body
 {
     border: solid white;
     width: 97.5%;
-    height: 15vh;
+    height: 17vh;
     text-align: left;
     padding: 5px;
 }
@@ -68,8 +68,8 @@ body
     height: 80px;
     width: 80px;
     position: absolute;
-    top: 25em;
-    left: 35em;
+    top: 20em;
+    left: 31em;
 }
 
 
@@ -94,7 +94,7 @@ body
     font-family: 'VT323', monospace;
 }
 
-.player 
+.hero
 {
     /* border: solid green; */
     width: 40px;
@@ -108,3 +108,5 @@ body
     width: 8%;
     height: 46.5vh;
 }
+
+
